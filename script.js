@@ -30,7 +30,6 @@ function loadFlag(element) {
     }
 }
 
-
 getButton.addEventListener("click", e => {
     e.preventDefault();
     convert();
@@ -47,12 +46,11 @@ exchangeIcon.addEventListener("click", () => {
 });
 
 function convert() {
-    const amount = document.querySelector(".amount input"),
-        exchangeRateTxt = document.querySelector(".exchange-rate");
-    let amountVal = amount.value;
-    if (amountVal == "" || amountVal == "0") {
-        amount.value = "1";
-        amountVal = 1;
+    let amountVal = amountInput.value;
+
+    if (amountVal.trim() === "" || isNaN(amountVal) || Number(amountVal) <= 0) {
+        exchangeRateTxt.innerText = "Please enter a valid amount.";
+        return;
     }
 
     exchangeRateTxt.innerText = "Getting exchange rate...";
