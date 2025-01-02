@@ -1,7 +1,9 @@
 const dropList = document.querySelectorAll(".drop-list select"),
     fromCurrency = document.querySelector(".from select"),
     toCurrency = document.querySelector(".to select"),
-    getButton = document.querySelector("form button");
+    getButton = document.querySelector("form button"),
+    amountInput = document.querySelector(".amount input"),
+    exchangeRateTxt = document.querySelector(".exchange-rate");
 
 for (let i = 0; i < dropList.length; i++) {
     for (currency_code in country_code) {
@@ -17,7 +19,6 @@ for (let i = 0; i < dropList.length; i++) {
     dropList[i].addEventListener("change", e => {
         loadFlag(e.target);
     });
-
 }
 
 function loadFlag(element) {
@@ -29,9 +30,6 @@ function loadFlag(element) {
     }
 }
 
-window.addEventListener("load", () => {
-    convert();
-});
 
 getButton.addEventListener("click", e => {
     e.preventDefault();
@@ -49,15 +47,14 @@ exchangeIcon.addEventListener("click", () => {
 });
 
 function convert() {
-    const amount = document.querySelector(".amount input"),
-        exchangeRateTxt = document.querySelector(".exchange-rate");
-    let amountVal = amount.value;
-    if (amountVal == "" || amountVal == "0") {
-        amount.value = "1";
-        amountVal = 1;
+    let amountVal = amountInput.value;
+
+    if (amountVal.trim() === "" || isNaN(amountVal) || Number(amountVal) <= 0) {
+        exchangeRateTxt.innerText = "Please enter a valid amount.";
+        return;
     }
 
-    exchangeRateTxt.innerText = "Getting exchange rate..."
+    exchangeRateTxt.innerText = "Getting exchange rate...";
     let apiKey = "b2cd08a01b6deac3e94578d4";
     let url = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/${fromCurrency.value}`;
     fetch(url).then(response => response.json()).then(result => {
