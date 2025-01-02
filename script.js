@@ -50,7 +50,7 @@ exchangeIcon.addEventListener("click", () => {
 
 function convert() {
     const amount = document.querySelector(".amount input"),
-        exchangeRateTxt = document.querySelector(".exchange-rate");
+    exchangeRateTxt = document.querySelector(".exchange-rate");
     let amountVal = amount.value;
     if (amountVal == "" || amountVal == "0") {
         amount.value = "1";
